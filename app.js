@@ -1,4 +1,3 @@
-// Question Constructor
 function Question(text, choices, answer) {
     this.text = text;
     this.choices = choices;
@@ -7,7 +6,6 @@ function Question(text, choices, answer) {
 Question.prototype.checkAnswer = function (answer) {
     return this.answer === answer
 };
-// Quiz Constructor
 function Quiz(questions) {
     this.questions = questions;
     this.score = 0;
@@ -26,29 +24,40 @@ Quiz.prototype.quess = function (answer) {
     }
     this.qustionIndex++;
 };
-
-
 var q1 = new Question("What is the best programming", ["C#", "JavaScript", "Phyton", "asp.net"], "JavaScript");
 var q2 = new Question("What is the most popular language", ["C#", "visual basic", "nedejs", "JavaScript"], "JavaScript");
 var q3 = new Question("What is the best modern programming language", ["C#", "JavaScript", "Phyton", "asp.net"], "JavaScript");
-
 var questions = [q1, q2, q3,];
-
-// Start Quiz
-
 var quiz = new Quiz(questions);
-
-
-console.log(quiz.isFinish());
-
-console.log(quiz.getQuestion());
-quiz.quess("JavaScript");
-
-console.log(quiz.getQuestion());
-quiz.quess("JavaScript");
-
-console.log(quiz.getQuestion());
-quiz.quess("JavaScript");
-
-console.log(quiz.score);
-console.log(quiz.isFinish());
+loadQuestion();
+function loadQuestion() {
+    if (quiz.isFinish()) {
+        showScore();
+    } else {
+        var question = quiz.getQuestion();
+        var choices = question.choices;
+        document.querySelector("#question").textContent = question.text;
+        for (var i = 0; i < choices.length; i++) {
+            var element = document.querySelector("#choice" + i);
+            element.innerHTML = choices[i];
+            quess("btn" + i, choices[i]);
+        };
+        showProgress();
+    }
+};
+function quess(id, quess) {
+    var btn = document.getElementById(id);
+    btn.onclick = function () {
+        quiz.quess(quess);
+        loadQuestion();
+    }
+};
+function showScore() {
+    var html = `<h2>Score</h2><h4>${quiz.score}</h4>`;
+    document.querySelector(".card-body").innerHTML = html;
+};
+function showProgress() {
+    var totalQuestion = quiz.questions.lenght;
+    var questionNumber = quiz.qustionIndex + 1;
+    document.querySelector("#progress").innerHTML = "Question " + questionNumber + " of " + totalQuestion;
+};
