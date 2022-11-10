@@ -9,20 +9,20 @@ Question.prototype.checkAnswer = function (answer) {
 function Quiz(questions) {
     this.questions = questions;
     this.score = 0;
-    this.qustionIndex = 0;
+    this.questionIndex = 0;
 }
 Quiz.prototype.getQuestion = function () {
-    return this.questions[this.qustionIndex];
+    return this.questions[this.questionIndex];
 }
 Quiz.prototype.isFinish = function () {
-    return this.questions.lenght === this.qustionIndex;
+    return this.questions.length === this.questionIndex;
 }
 Quiz.prototype.quess = function (answer) {
     var question = this.getQuestion();
     if (question.checkAnswer(answer)) {
         this.score++;
     }
-    this.qustionIndex++;
+    this.questionIndex++;
 };
 var q1 = new Question("What is the best programming", ["C#", "JavaScript", "Phyton", "asp.net"], "JavaScript");
 var q2 = new Question("What is the most popular language", ["C#", "visual basic", "nedejs", "JavaScript"], "JavaScript");
@@ -57,7 +57,7 @@ function showScore() {
     document.querySelector(".card-body").innerHTML = html;
 };
 function showProgress() {
-    var totalQuestion = quiz.questions.lenght;
-    var questionNumber = quiz.qustionIndex + 1;
+    var totalQuestion = quiz.questions.length;
+    var questionNumber = quiz.questionIndex + 1;
     document.querySelector("#progress").innerHTML = "Question " + questionNumber + " of " + totalQuestion;
 };
